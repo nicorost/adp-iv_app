@@ -65,8 +65,8 @@ body <- dashboardBody(
                 h1("Items"),
                 p("Bitte geben Sie hier die entsprechenenden Item-Werte aus dem Fragebogen ein."),
               
-                tabPanel("Items", uiOutput("items")),
-                
+                tabPanel("Items", uiOutput("items"))
+
               )
             
             )
@@ -118,21 +118,25 @@ ui <- dashboardPage(
 server <- function(input, output) {
   
   v <- list()
+  y <- list()
   for (i in item_nums){
-    v[[i]] <- sliderInput(paste0("item_", i),
+    v[[i]] <- box(title = paste0("Item ", i),
+                  sliderInput(paste0("item_", i),
                           paste0("Item ", i),
                           min = 1, 
                           max = 7,
-                          value = 1)
-    conditionalPanel(condition = paste0("item_", i, " >= 5"),
-                     sliderInput(paste0("item_", i, "_add"),
-                                 paste0("Zusatz Item ", i),
-                                 min = 1, 
-                                 max = 3,
-                                 value = 1))
+                          value = 1),
+                  conditionalPanel(condition = paste0("item_", i, " >= 5"),
+                                   sliderInput(paste0("item_", i, "_add"),
+                                               paste0("Zusatz Item ", i),
+                                               min = 1, 
+                                               max = 3,
+                                               value = 1))
+    )
   }
-  output$items <- renderUI(v)
   
+  output$items <- renderUI(v)
+
 }
 
 
