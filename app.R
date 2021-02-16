@@ -1,9 +1,22 @@
+# App zur Auswertung des ADP-IV Fragebogens
 
+# https://www.meduniwien.ac.at/hp/psychoanalyse/forschung/diagnostik-downloads/diagnostik-von-persoenlichkeitsstoerungen/
+
+# (C) Nicolas Rost, 2021
+
+
+
+# Packages ----
 
 library(shiny)
+library("semantic.dashboard")
 
 
-# Define UI ----
+
+
+
+# 1. UI ----
+
 ui <- fluidPage(
   titlePanel("Basic widgets"),
   
@@ -80,10 +93,19 @@ ui <- fluidPage(
   
 )
 
-# Define server logic ----
+
+
+
+
+# 2. Server ----
+
 server <- function(input, output) {
   
 }
 
-# Run the app ----
+
+
+
+
+# 3. Run App ----
 shinyApp(ui = ui, server = server)
