@@ -12,7 +12,7 @@ library(shiny)
 library("semantic.dashboard")
 
 
-item_nums <- c(1:94)
+item_nums <- c(1:5)
 
 
 
@@ -36,9 +36,9 @@ sidebar <- dashboardSidebar(
     menuItem("Dimensionale Diagnostik", tabName = "dim_diag", 
              icon = icon("calculator")),
     menuItem("Erläuterungen", tabName = "erlaeuterungen", 
-             icon = icon("th")),
+             icon = icon("info circle")),
     menuItem("Kontakt", tabName = "kontakt", 
-             icon = icon("info circle"))
+             icon = icon("paper plane"))
     )
 )
 
@@ -76,7 +76,15 @@ body <- dashboardBody(
 
     
     ### 1.2.2 Kategoriale Diagnostik
-    tabItem(tabName = "kat_diag"),
+    tabItem(tabName = "kat_diag",
+            
+            fluidRow(
+              box(
+                tableOutput("Antworten")
+              )
+            )
+            
+    ),
     
     
     ### 1.2.3 Dimensionale Diagnostik
@@ -118,6 +126,7 @@ ui <- dashboardPage(
 server <- function(input, output) {
   
   values <- list()
+  obs <- list()
   for (i in item_nums){
    values[[i]] <- box(
      title = paste0("Item ", i),
@@ -134,9 +143,19 @@ server <- function(input, output) {
                                   max = 3,
                                   value = 1,
                                   width = "18%"))
+     
                  )
-
+   
   }
+  
+  werte <- reactive({
+    data.frame(
+      Name = c("Item 1", "Item 2"),
+      Wert = c(input$item_1, input$item_2),
+      Add = c(input$add_item_1, input$add_item_2)
+    )
+  })
+  output$Antworten <- renderTable(werte())
   output$items <- renderUI(values)
 
 }
