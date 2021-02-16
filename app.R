@@ -126,14 +126,14 @@ server <- function(input, output) {
                  min = 1,
                  max = 7,
                  value = 1,
-                 width = "70%"),
+                 width = "50%"),
      conditionalPanel(condition = paste0("input.item_", i, " >= 5"),
                       sliderInput(paste0("add_item_", i),
                                   paste0("Zusatz Item ", i),
                                   min = 1, 
                                   max = 3,
                                   value = 1,
-                                  width = "30%"))
+                                  width = "18%"))
                  )
 
   }
