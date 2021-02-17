@@ -12,7 +12,12 @@ library(shiny)
 library("semantic.dashboard")
 
 
-item_nums <- c(1:5)
+source("utils.R")
+
+
+item_nums <- c(1:94)
+
+
 
 
 
@@ -58,6 +63,7 @@ body <- dashboardBody(
             fluidRow(
               
               box(
+                
                 title = "Items",
                 color = "blue",
                 width = 16,
@@ -75,19 +81,26 @@ body <- dashboardBody(
     
 
     
-    ### 1.2.2 Kategoriale Diagnostik
+    ### 1.2.2 Kategoriale Diagnostik ----
     tabItem(tabName = "kat_diag",
             
             fluidRow(
+              
               box(
-                tableOutput("Antworten")
+                
+                width = 16,
+                
+                p("Text hier."),
+                tableOutput("paranoid")
+                
               )
+              
             )
             
     ),
     
     
-    ### 1.2.3 Dimensionale Diagnostik
+    ### 1.2.3 Dimensionale Diagnostik ----
     tabItem(tabName = "dim_diag"),
 
     
@@ -125,8 +138,10 @@ ui <- dashboardPage(
 
 server <- function(input, output) {
   
+  
+  ## 2.1 Item Eingabe ----
+  
   values <- list()
-  obs <- list()
   for (i in item_nums){
    values[[i]] <- box(
      title = paste0("Item ", i),
@@ -137,8 +152,8 @@ server <- function(input, output) {
                  value = 1,
                  width = "50%"),
      conditionalPanel(condition = paste0("input.item_", i, " >= 5"),
-                      sliderInput(paste0("add_item_", i),
-                                  paste0("Zusatz Item ", i),
+                      sliderInput(paste0("leid_item_", i),
+                                  paste0("Leid Item ", i),
                                   min = 1, 
                                   max = 3,
                                   value = 1,
@@ -149,15 +164,31 @@ server <- function(input, output) {
   }
   
   werte <- reactive({
+    ant_mat <- matrix(nrow = length(item_nums), ncol = 3)
+    for (i in item_nums) {
+      ant_mat[i,1] <- paste0(item_nums[i])
+      ant_mat[i,2] <- input[[paste0("item_", i)]]
+      ant_mat[i,3] <- input[[paste0("leid_item_", i)]]
+    }
     data.frame(
-      Name = c("Item 1", "Item 2"),
-      Wert = c(input$item_1, input$item_2),
-      Add = c(input$add_item_1, input$add_item_2)
+      Item     = ant_mat[,1],
+      Trait    = as.numeric(ant_mat[,2]),
+      Distress = as.numeric(ant_mat[,3])
     )
   })
+  
   output$Antworten <- renderTable(werte())
   output$items <- renderUI(values)
 
+  
+  # 2.2 Kategoriale Diagnostik ----
+  
+  kat_results <- reactive({
+    score_kat_diag(werte(), "t4_d1")
+  })
+  
+  output$paranoid <- renderTable({kat_results()})
+    
 }
 
 
