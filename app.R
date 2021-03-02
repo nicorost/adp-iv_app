@@ -8,7 +8,7 @@
 
 # Packages ----
 
-library(shiny)
+library("shiny")
 library("semantic.dashboard")
 
 
@@ -16,6 +16,9 @@ source("utils.R")
 
 
 item_nums <- c(1:94)
+
+
+color <- "blue"
 
 
 
@@ -32,6 +35,7 @@ item_nums <- c(1:94)
 sidebar <- dashboardSidebar(
   
   side = "left",
+  color = color,
 
   sidebarMenu(
     menuItem("Item Eingabe", tabName = "item_values", 
@@ -53,19 +57,21 @@ sidebar <- dashboardSidebar(
 
 body <- dashboardBody(
   
-  tabItems(
-    
-    
+
+    tabItems(
+  
+  
     ### 1.2.1 Item Eingabe ----
     
     tabItem(tabName = "item_values",
+            
             
             fluidRow(
               
               box(
                 
                 title = "Items",
-                color = "blue",
+                color = color,
                 width = 16,
               
                 h1("Items"),
@@ -88,9 +94,44 @@ body <- dashboardBody(
               
               box(
                 
+                title = "Kategoriale Diagnostik",
+                color = color,
                 width = 16,
                 
-                p("Text hier."),
+                h1("Kategoriale Diagnostik"),
+                strong("Der  ADP-IV  sieht  zwei  Scoring-Algorithmen  vor:"),
+                br(),
+                strong("T>4  und  D>1  sowie  T>5  und  D>1."),
+                br(),
+                p("Dies  bedeutet,  dass  ein  Item  dann  als  erfüllt  angesehen  wird,  wenn  im  dimensionalen  Rating  das  Trait-Item  5  oder  mehr  bzw.  6  oder  mehr  beträgt  und  darüber  hinaus  das  Distress-Rating  zwei oder mehr beträgt. Der T>4 und D>1 Algorithmus eignet sich eher für Screening-Zwecke während der strengere T>5 und D>1 Algorithmus eher für den wissenschaftlichen Einsatz geeignet ist. Der gewähl-te Algorithmus ist oben auf dem Auswertungsbogen anzukreuzen.")
+                
+              ),
+              
+              box(
+                
+                title = "Scoring-Algorithmus",
+                color = color,
+                width = 16,
+                
+                h1("Scoring-Algorithmus"),
+                strong("Bitte Scoring-Algorithmus auswählen:"),
+                br(),
+                radioButtons("kat_alg", 
+                             NULL,
+                             list("T>4 & D>1" = "t4_d1",
+                                  "T>5 & D>1" = "t5_d1"),
+                             selected = "t4_d1",
+                             inline = T)
+                
+              ),
+              
+              box(
+                
+                title = "Diagnosen",
+                color = color,
+                width = 16,
+                
+                h1("Kategoriale Diagnosen"),
                 tableOutput("paranoid")
                 
               )
@@ -120,10 +161,9 @@ body <- dashboardBody(
 ## 1.3 Defining UI ----
 
 ui <- dashboardPage(
-  
   dashboardHeader(
     h1("ADP-IV Auswertung", style = "color:black", align = "center"),
-    color = "blue",
+    color = color,
     disable = FALSE
   ),
   sidebar,
@@ -146,14 +186,14 @@ server <- function(input, output) {
    values[[i]] <- box(
      title = paste0("Item ", i),
      sliderInput(paste0("item_", i),
-                 paste0("Item ", i),
+                 paste0("Trait Item ", i),
                  min = 1,
                  max = 7,
                  value = 1,
                  width = "50%"),
      conditionalPanel(condition = paste0("input.item_", i, " >= 5"),
                       sliderInput(paste0("leid_item_", i),
-                                  paste0("Leid Item ", i),
+                                  paste0("Distress Item ", i),
                                   min = 1, 
                                   max = 3,
                                   value = 1,
@@ -179,12 +219,12 @@ server <- function(input, output) {
   
   output$Antworten <- renderTable(werte())
   output$items <- renderUI(values)
-
+  
   
   # 2.2 Kategoriale Diagnostik ----
   
   kat_results <- reactive({
-    score_kat_diag(werte(), "t4_d1")
+    score_kat_diag(werte(), input$kat_alg)
   })
   
   output$paranoid <- renderTable({kat_results()})

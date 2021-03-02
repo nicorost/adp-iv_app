@@ -27,7 +27,7 @@ score_kat_diag <- function(antworten, alg) {
     antworten <- antworten %>% 
       mutate(erfuellt = ifelse(Trait > 4 & Distress > 1, 1, 0))
   } else if (alg == "t5_d1") {
-    antworte <- antworten %>% 
+    antworten <- antworten %>% 
       mutate(erfuellt = ifelse(Trait > 5 & Distress > 1, 1, 0))
   }
   
