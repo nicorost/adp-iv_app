@@ -306,71 +306,71 @@ ui <- dashboardPage(
 # 2. Server ----
 
 server <- function(input, output) {
-# 
-# 
-#   ## 2.1 Item Eingabe ----
-# 
-#   values <- list()
-#   for (i in item_nums){
-#    values[[i]] <- box(
-#      title = paste0("Item ", i),
-#      sliderInput(paste0("item_", i),
-#                  paste0("Trait Item ", i),
-#                  min = 1,
-#                  max = 7,
-#                  value = 1,
-#                  width = "50%"),
-#      conditionalPanel(condition = paste0("input.item_", i, " >= 5"),
-#                       sliderInput(paste0("leid_item_", i),
-#                                   paste0("Distress Item ", i),
-#                                   min = 1,
-#                                   max = 3,
-#                                   value = 1,
-#                                   width = "18%"))
-# 
-#                  )
-# 
-#   }
-# 
-#   werte <- reactive({
-#     ant_mat <- matrix(nrow = length(item_nums), ncol = 3)
-#     for (i in item_nums) {
-#       ant_mat[i,1] <- paste0(item_nums[i])
-#       ant_mat[i,2] <- input[[paste0("item_", i)]]
-#       ant_mat[i,3] <- input[[paste0("leid_item_", i)]]
-#     }
-#     data.frame(
-#       Item     = ant_mat[,1],
-#       Trait    = as.numeric(ant_mat[,2]),
-#       Distress = as.numeric(ant_mat[,3])
-#     )
-#   })
-# 
-#   output$Antworten <- renderTable(werte())
-#   output$items <- renderUI(values)
-# 
-# 
-#   # 2.2 Kategoriale Diagnostik ----
-# 
-#   kat_results <- reactive({
-#     score_kat_diag(werte(), input$kat_alg)
-#   })
-# 
-#   output$kategorial <- renderTable({kat_results()})
-# 
-# 
-#   # 2.3 Dimensionale Diagnostik ----
-# 
-#   dim_results <- reactive({
-#     score_dim_diag(werte())
-#   })
-# 
-#   output$cluster_a <- renderTable({dim_results()[[1]]})
-#   output$cluster_b <- renderTable({dim_results()[[2]]})
-#   output$cluster_c <- renderTable({dim_results()[[3]]})
-#   output$gesamt    <- renderTable({dim_results()[[4]]})
-#   output$nnb       <- renderTable({dim_results()[[5]]})
-# 
+
+
+  ## 2.1 Item Eingabe ----
+
+  values <- list()
+  for (i in item_nums){
+   values[[i]] <- box(
+     title = paste0("Item ", i),
+     sliderInput(paste0("item_", i),
+                 paste0("Trait Item ", i),
+                 min = 1,
+                 max = 7,
+                 value = 1,
+                 width = "50%"),
+     conditionalPanel(condition = paste0("input.item_", i, " >= 5"),
+                      sliderInput(paste0("leid_item_", i),
+                                  paste0("Distress Item ", i),
+                                  min = 1,
+                                  max = 3,
+                                  value = 1,
+                                  width = "18%"))
+
+                 )
+
+  }
+
+  werte <- reactive({
+    ant_mat <- matrix(nrow = length(item_nums), ncol = 3)
+    for (i in item_nums) {
+      ant_mat[i,1] <- paste0(item_nums[i])
+      ant_mat[i,2] <- input[[paste0("item_", i)]]
+      ant_mat[i,3] <- input[[paste0("leid_item_", i)]]
+    }
+    data.frame(
+      Item     = ant_mat[,1],
+      Trait    = as.numeric(ant_mat[,2]),
+      Distress = as.numeric(ant_mat[,3])
+    )
+  })
+
+  output$Antworten <- renderTable(werte())
+  output$items <- renderUI(values)
+
+
+  # 2.2 Kategoriale Diagnostik ----
+
+  kat_results <- reactive({
+    score_kat_diag(werte(), input$kat_alg)
+  })
+
+  output$kategorial <- renderTable({kat_results()})
+
+
+  # 2.3 Dimensionale Diagnostik ----
+
+  dim_results <- reactive({
+    score_dim_diag(werte())
+  })
+
+  output$cluster_a <- renderTable({dim_results()[[1]]})
+  output$cluster_b <- renderTable({dim_results()[[2]]})
+  output$cluster_c <- renderTable({dim_results()[[3]]})
+  output$gesamt    <- renderTable({dim_results()[[4]]})
+  output$nnb       <- renderTable({dim_results()[[5]]})
+
 }
 
 
