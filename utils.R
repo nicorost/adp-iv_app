@@ -117,3 +117,101 @@ score_kat_diag <- function(antworten, alg) {
   return(output)
   
 }
+
+
+# dimensional scoring ----
+
+# subdiagnosis items
+par_items   <- as.character(c(1, 13, 25, 37, 49, 61, 73))
+sz_items    <- as.character(c(2, 14, 26, 38, 50, 62, 74))
+st_items    <- as.character(c(3, 15, 27, 39, 50, 51, 63, 75, 85))
+ver_items   <- as.character(c(8, 20, 32, 44, 56, 68, 80))
+dep_items   <- as.character(c(9, 21, 33, 45, 57, 69, 81, 90))
+zwa_items   <- as.character(c(10, 22, 34, 46, 58, 70, 82, 91))
+as_items    <- as.character(c(4, 16, 28, 40, 52, 64, 76, 86))
+bdl_items   <- as.character(c(5, 17, 29, 41, 53, 65, 77, 87, 92, 94))
+his_items   <- as.character(c(6, 18, 30, 42, 54, 66, 78, 88))
+nar_items   <- as.character(c(7, 19,31, 43, 55, 67, 79, 89, 93))
+nnb_d_items <- as.character(c(11, 23, 35, 47, 59, 71, 83))
+nnb_p_items <- as.character(c(12, 24, 36, 48, 60, 72, 84))
+
+score_dim_diag <- function(antworten) {
+  
+  par   <- antworten %>% filter(Item %in% par_items)
+  sz    <- antworten %>% filter(Item %in% sz_items)
+  st    <- antworten %>% filter(Item %in% st_items)
+  ver   <- antworten %>% filter(Item %in% ver_items)
+  dep   <- antworten %>% filter(Item %in% dep_items)
+  zwa   <- antworten %>% filter(Item %in% zwa_items)
+  as    <- antworten %>% filter(Item %in% as_items)
+  bdl   <- antworten %>% filter(Item %in% bdl_items)
+  his   <- antworten %>% filter(Item %in% his_items)
+  nar   <- antworten %>% filter(Item %in% nar_items)
+  nnb_d <- antworten %>% filter(Item %in% nnb_d_items)
+  nnb_p <- antworten %>% filter(Item %in% nnb_p_items)
+  
+  cluster_a <- data.frame(
+    Diagnose = c("PAR",
+                 "SZ",
+                 "ST",
+                 "Gesamt"),
+    Score = c(as.integer(sum(par$Trait)),
+              as.integer(sum(sz$Trait)),
+              as.integer(sum(st$Trait)),
+              as.integer(sum(sum(par$Trait), sum(sz$Trait), sum(st$Trait)))),
+    check.names = F
+  )
+  
+  cluster_b <- data.frame(
+    Diagnose = c("AS",
+                 "BDL",
+                 "HIS",
+                 "NAR",
+                 "Gesamt"),
+    Score = c(as.integer(sum(as$Trait)),
+              as.integer(sum(bdl$Trait)),
+              as.integer(sum(his$Trait)),
+              as.integer(sum(nar$Trait)),
+              as.integer(sum(sum(as$Trait), sum(bdl$Trait), sum(his$Trait), sum(nar$Trait)))),
+    check.names = F
+  )
+  
+  cluster_c <- data.frame(
+    Diagnose = c("VER",
+                 "DEP",
+                 "ZWA",
+                 "Gesamt"),
+    Score = c(as.integer(sum(ver$Trait)),
+              as.integer(sum(dep$Trait)),
+              as.integer(sum(zwa$Trait)),
+              as.integer(sum(sum(ver$Trait), sum(dep$Trait), sum(zwa$Trait)))),
+    check.names = F
+  )
+  
+  gesamt <- data.frame(
+    Cluster = c("A",
+                "B",
+                "C",
+                "Gesamt"),
+    Score = c(cluster_a$Score[cluster_a$Diagnose == "Gesamt"],
+              cluster_b$Score[cluster_b$Diagnose == "Gesamt"],
+              cluster_c$Score[cluster_c$Diagnose == "Gesamt"],
+              as.integer(sum(cluster_a$Score[cluster_a$Diagnose == "Gesamt"],
+                             cluster_b$Score[cluster_b$Diagnose == "Gesamt"],
+                             cluster_c$Score[cluster_c$Diagnose == "Gesamt"]))),
+    check.names = F
+  )
+  
+  nnb <- data.frame(
+    Diagnose = c("Depressiv",
+                 "Passiv-Aggressiv"),
+    Score = c(as.integer(sum(nnb_d$Trait)),
+              as.integer(sum(nnb_p$Trait))),
+    check.names = F
+  )
+  
+  results_list <- list(cluster_a, cluster_b, cluster_c, gesamt, nnb)
+  
+  return(results_list)
+  
+}
