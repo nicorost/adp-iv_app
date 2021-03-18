@@ -8,17 +8,19 @@
 
 # Packages ----
 
-library("shiny")
-library("semantic.dashboard")
+library(shiny)
+library(semantic.dashboard)
+library(shinyWidgets)
 
 
 source("utils.R")
 
 
-item_nums <- c(1:94)
+n_items <- 94
+item_nums <- c(1:n_items)
 
 
-color <- "blue"
+color <- "teal"
 
 
 
@@ -102,7 +104,7 @@ body <- dashboardBody(
                 br(),
                 strong("T>4  und  D>1  sowie  T>5  und  D>1."),
                 br(),
-                p("Dies  bedeutet,  dass  ein  Item  dann  als  erfüllt  angesehen  wird,  wenn  im  dimensionalen  Rating  das  Trait-Item  5  oder  mehr  bzw.  6  oder  mehr  beträgt  und  darüber  hinaus  das  Distress-Rating  zwei oder mehr beträgt. Der T>4 und D>1 Algorithmus eignet sich eher für Screening-Zwecke während der strengere T>5 und D>1 Algorithmus eher für den wissenschaftlichen Einsatz geeignet ist. Der gewähl-te Algorithmus ist oben auszuwählen."),
+                p("Dies  bedeutet,  dass  ein  Item  dann  als  erfüllt  angesehen  wird,  wenn  im  dimensionalen  Rating  das  Trait-Item  5  oder  mehr  bzw.  6  oder  mehr  beträgt  und  darüber  hinaus  das  Distress-Rating  zwei oder mehr beträgt. Der T>4 und D>1 Algorithmus eignet sich eher für Screening-Zwecke während der strengere T>5 und D>1 Algorithmus eher für den wissenschaftlichen Einsatz geeignet ist. Der gewünschte Algorithmus ist oben auszuwählen."),
                 
               
                 box(
@@ -314,6 +316,7 @@ server <- function(input, output) {
   for (i in item_nums){
    values[[i]] <- box(
      title = paste0("Item ", i),
+     setSliderColor(rep(color, (2 * n_items)), c(1:(n_items * 2))),
      sliderInput(paste0("item_", i),
                  paste0("Trait Item ", i),
                  min = 1,
