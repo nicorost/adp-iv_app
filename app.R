@@ -116,6 +116,7 @@ body <- dashboardBody(
                   h3("Scoring-Algorithmus"),
                   strong("Bitte Scoring-Algorithmus auswählen:"),
                   br(),
+                  br(),
                   prettyRadioButtons("kat_alg", 
                                      NULL,
                                      list("T>4 & D>1" = "t4_d1",
