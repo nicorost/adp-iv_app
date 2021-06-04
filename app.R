@@ -8,9 +8,8 @@
 
 # Packages ----
 
-library(shiny)
-library(semantic.dashboard)
-library(shinyWidgets)
+if (!require("pacman")) install.packages("pacman"); library(pacman)
+p_load(shiny, semantic.dashboard, shinyWidgets)
 
 
 source("utils.R")
