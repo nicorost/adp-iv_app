@@ -99,11 +99,11 @@ body <- dashboardBody(
                 width = 16,
                 
                 h1("Kategoriale Diagnostik"),
-                strong("Der  ADP-IV  sieht  zwei  verschiedene Scoring-Algorithmen  vor:"),
+                strong("Der ADP-IV sieht zwei verschiedene Scoring-Algorithmen vor:"),
                 br(),
-                strong("T>4  und  D>1  sowie  T>5  und  D>1."),
+                strong("T>4 & D>1 sowie T>5 & D>1."),
                 br(),
-                p("Ein Item wird dann als erfüllt angesehen,  wenn das zugehörige Rating  des  Trait-Items  5  oder  mehr  bzw.  6  oder  mehr  beträgt  und  gleichzeitig  das  Distress-Rating  zwei oder mehr beträgt. Der T>4/D>1 Algorithmus dient laut", a("Manual", href="https://www.meduniwien.ac.at/hp/fileadmin/psychoanalyse/pdf/ADP-IV_Anleitung_zur_Auswertung.pdf"), "eher Screening-Zwecken, während der strengere T>5/D>1 Algorithmus eher für den wissenschaftlichen Einsatz geeignet ist. Der gewünschte Algorithmus ist oben auszuwählen."),
+                p("Ein Item wird dann als erfüllt angesehen, wenn das zugehörige Trait-Rating 5 oder mehr bzw. 6 oder mehr beträgt und gleichzeitig das Distress-Rating zwei oder mehr beträgt. Der", em("T>4 & D>1"), "Algorithmus dient laut", a("Manual", href="https://www.meduniwien.ac.at/hp/fileadmin/psychoanalyse/pdf/ADP-IV_Anleitung_zur_Auswertung.pdf"), "eher Screening-Zwecken, während der strengere", em("T>5 & D>1"), "Algorithmus eher für den wissenschaftlichen Einsatz geeignet ist. Der gewünschte Algorithmus ist oben auszuwählen."),
                 
               
                 box(
@@ -227,7 +227,7 @@ body <- dashboardBody(
                 
                 h2("Diagnostik von Persönlichkeitsstörungen"),
                 p("Der ADP-IV dient zur Diagnostik von Persönlichkeitsstörungen, für die oft zeitaufwändige klinische Interviews verwendet werden. Ein vergleichsweise schnell durchführbarer Screening-Fragebogen kann daher eine wertvolle Ergänzung darstellen."),
-                p("Ursprünglich wurde der ADP-IV von den belgischen Autoren Chris Schotte und Dirk De Doncker entwickelt. Doering et al. übersetzten und validierten ihn und stellten ihn Kliniker:innen und Wissenschaftler:innen frei zur Verfügung. Fragebogen sowie zugehörige Auswertungsbögen mit -anleitung", a("hier", href="https://www.meduniwien.ac.at/hp/psychoanalyse/forschung/diagnostik-downloads/diagnostik-von-persoenlichkeitsstoerungen/"), "kostenfrei heruntergeladen werden."),
+                p("Ursprünglich wurde der ADP-IV von den belgischen Autoren Chris Schotte und Dirk De Doncker entwickelt. Doering et al. übersetzten und validierten ihn und stellten ihn Kliniker:innen und Wissenschaftler:innen frei zur Verfügung. Der Fragebogen sowie zugehörige Auswertungsbögen und -anleitung können", a("hier", href="https://www.meduniwien.ac.at/hp/psychoanalyse/forschung/diagnostik-downloads/diagnostik-von-persoenlichkeitsstoerungen/"), "kostenfrei heruntergeladen werden."),
                 p("Die Originalpublikationen zur deutschsprachigen Version finden sich in der Zeitschrift für Psychosomatische Medizin und Psychotherapie, Heft 02/2007 und 03/2008."),
               
                 box(
@@ -238,7 +238,7 @@ body <- dashboardBody(
                   p("Die 94 Items des ADP-IV beziehen sich auf verschiedene Persönlichkeitszüge und -eigenschaften und ermöglichen somit eine", strong("Selbsteinschätzung von Persönlichkeitsstörungen"), "."),
                   p("Der ADP-IV Fragebogen ist speziell auf Persönlichkeitseigenschaften ausgerichtet, die problematisch und schwer zu ändern sein können. Er fragt daher nach Persönlichkeitszügen, die Ursache von Stress, Problemen, Konflikten usw. sein und ein ausgewogenes und befriedigendes Leben in der Gesellschaft behindern können."),
                   p("Die Auswertung liefert zum einen", em("kategoriale"), "Diagnosen, gestattet aber auch eine", em("dimensionale"), "Diagnostik und die Erstellung eines Profils der Persönlichkeitspathologie."),
-                  p("Zusätzliche und detailliertere Informationen finden sich auf der", a("Homepage zum Fragebogen", href="https://www.meduniwien.ac.at/hp/psychoanalyse/forschung/diagnostik-downloads/diagnostik-von-persoenlichkeitsstoerungen/"))
+                  p("Zusätzliche und detailliertere Informationen finden sich auf der", a("Homepage zum Fragebogen", href="https://www.meduniwien.ac.at/hp/psychoanalyse/forschung/diagnostik-downloads/diagnostik-von-persoenlichkeitsstoerungen/"), ".")
                   
                 )
                 
@@ -250,7 +250,7 @@ body <- dashboardBody(
                 color = color,
                 
                 h2("Benutzung der App"),
-                p("Diese Web-App soll bei der Auswertung des Fragebogens helfen, indem sie die Persönlichkeitsdiagnostik basierend auf einer", strong("anonymen Eingabe"), "der Item-Werte automatisiert."),
+                p("Diese Shiny-App soll bei der Auswertung des Fragebogens helfen, indem sie die Persönlichkeitsdiagnostik basierend auf einer", strong("anonymen Eingabe"), "der Item-Werte automatisiert."),
                 p("Die Item-Werte können im obersten Tab mithilfe der Schieberegler eingegeben werden. Durch die Eingabe wird automatisch die Diagnostik erstellt."),
                 p("Zur Auswertung kann zwischen der", strong("kategorialen"), "und", strong("dimensionalen"), "Diagnostik ausgewählt werden. Bei der kategorialen Diagnostik kann zudem zwischen den beiden Scoring-Algorithmen gewählt werden. Die Standard-Einstellung entspricht dabei dem", em("T>4 & D>1"), "Scoring."),
                 p("Die App" , strong("erfasst keine personenbezogenen Daten"), "und solche können und sollen auch nicht eingegeben werden. Die App dient lediglich der Ersparnis der manuellen Auswertung des Fragebogens.")
