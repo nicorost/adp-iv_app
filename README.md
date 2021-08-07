@@ -18,7 +18,8 @@ Voraussetzung für die Verwendung der App ist das Programm [Rstudio](https://www
 7. Geben Sie die Werte für alle Fragebogen-Items mithilfe der Schieberegler ein und klicken Sie auf die Tabs *"Kategoriale Diagnostik"* bzw. *"Dimensionale Diagnostik"* für die jeweilige Auswertung.
 
 ### Wichtige Informationen
-Die Benutzung der Web-App geschieht ohne Garantie und ohne jegliche Gewährleistung!
+Die Benutzung der Web-App geschieht ohne Garantie und ohne jegliche Gewährleistung.
+
 Diese Web-App erfasst **keine personenbezogenen Daten** und solche können und sollen auch nicht eingegeben werden. Die App dient lediglich der Ersparnis der manuellen Auswertung des Fragebogens.
 
 ### Fragen?
