@@ -9,7 +9,7 @@
 # Packages ----
 
 if (!require("pacman")) install.packages("pacman"); library(pacman)
-p_load(shiny, semantic.dashboard, shinyWidgets)
+p_load(shiny, semantic.dashboard, shinyWidgets, writexl)
 
 
 source("utils.R")
@@ -137,6 +137,20 @@ body <- dashboardBody(
                 h1("Kategoriale Diagnosen"),
                 tableOutput("kategorial")
                 
+              ),
+              
+              box(
+                
+                title = "Download",
+                color = color,
+                width = 16/2,
+                
+                h1("Diagnostik speichern?"),
+                downloadButton("kat_save",
+                               label = "Als .xlsx speichern",
+                               class = "butt"),
+                tags$head(tags$style(".butt{color:teal}"))
+                
               )
               
             )
@@ -207,6 +221,20 @@ body <- dashboardBody(
                 width = 16/3,
                 h3("Nicht Näher Bezeichnet"),
                 tableOutput("nnb")
+                
+              ),
+              
+              box(
+                
+                title = "Download",
+                color = color,
+                width = 16/2,
+                
+                h1("Diagnostik speichern?"),
+                downloadButton("dim_save",
+                               label = "Als .xlsx speichern",
+                               class = "butt"),
+                tags$head(tags$style(".butt{color:teal}"))
                 
               )
               
@@ -365,6 +393,15 @@ server <- function(input, output) {
 
   output$kategorial <- renderTable({kat_results()})
 
+  output$kat_save <- downloadHandler(
+    filename = function() {
+      paste0("ADP_IV_kategoriale_Diagnostik_", strftime(Sys.time(), format = "%Y%m%d_%Hh%Mm%Ss"), ".xlsx")
+    },
+    content = function(file) {
+      data <- kat_results()
+      write_xlsx(data, file)
+    }
+  )
 
   # 2.3 Dimensionale Diagnostik ----
 
@@ -378,6 +415,20 @@ server <- function(input, output) {
   output$gesamt    <- renderTable({dim_results()[[4]]})
   output$nnb       <- renderTable({dim_results()[[5]]})
 
+  output$dim_save <- downloadHandler(
+    filename = function() {
+      paste0("ADP_IV_dimensionale_Diagnostik_", strftime(Sys.time(), format = "%Y%m%d_%Hh%Mm%Ss"), ".xlsx")
+    },
+    content = function(file) {
+      datalist <- list("Cluster A" = dim_results()[[1]],
+                       "Cluster B" = dim_results()[[2]],
+                       "Cluster C" = dim_results()[[3]],
+                       "Gesamt" = dim_results()[[4]],
+                       "Nicht Näher Bezeichnet" = dim_results()[[5]])
+      write_xlsx(datalist, file)
+    }
+  )
+  
 }
 
 
